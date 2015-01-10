@@ -11,7 +11,7 @@ public class Category extends Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int id; //TODO aby sme zabezpecili ze sa kategorie nebudu opakovat .... dame ID nazov ...
     private String name;
 
     @OneToMany(mappedBy = "parent")

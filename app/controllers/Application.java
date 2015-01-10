@@ -3,6 +3,9 @@ package controllers;
 import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
 import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
+import cz.cvut.fel.si.schmipe4.service.CartService;
+import cz.cvut.fel.si.schmipe4.service.impl.CartServiceImpl;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -160,6 +163,8 @@ public class Application extends Controller {
         cart15.addItem(item7, 3);
         cart15.addItem(item8, 1);
 
+        //shopping za 70 000 presne :D
+
         cart1.save();
         cart2.save();
         cart3.save();
@@ -176,6 +181,12 @@ public class Application extends Controller {
         cart14.save();
         cart15.save();
 
+
+        CartService cs = new CartServiceImpl();
+        Logger.debug(cs.getTotalForDay(new Date()) + "");
+        Logger.debug(cs.getTotalForCategory(main) + "");
+        Logger.debug(cs.getTotalForCategory(submain) + "");
+        Logger.debug(cs.getTotalForCategory(subsubmain) + "");
 
         return ok(index.render("Your new application is ready."));
     }

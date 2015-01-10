@@ -4,6 +4,8 @@ import cz.cvut.fel.si.schmipe4.persistence.dao.CartDAO;
 import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
 import play.Logger;
 
+import java.util.Set;
+
 public class CartDAOImpl implements CartDAO {
     @Override
     public void addCart(Cart cart) {
@@ -27,5 +29,10 @@ public class CartDAOImpl implements CartDAO {
     public Cart getCartById(String customer) {
         Logger.debug("Getting Cart " + customer);
         return Cart.finder.byId(customer);
+    }
+
+    @Override
+    public Set<Cart> getAll() {
+        return Cart.finder.findSet();
     }
 }

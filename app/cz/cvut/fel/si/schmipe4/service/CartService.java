@@ -9,10 +9,10 @@ public interface CartService {
 
     public boolean shop();
 
-    public boolean getTotal(Cart cart);
+    public double getTotal(Cart cart);
 
-    public boolean getTotalForCategory(Cart cart, Category category);
+    public double getTotalForCategory(Category category);
 
-    public boolean getTotalForDay(Date date);
+    public double getTotalForDay(Date date);
 
 }

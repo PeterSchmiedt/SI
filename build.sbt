@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   "postgresql" % "postgresql" % "9.1-901.jdbc4",
   "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final",
   "org.hibernate" % "hibernate-core" % "4.3.7.Final",
+  "joda-time" % "joda-time" % "2.6",
   javaJdbc,
   javaEbean,
   cache,
