@@ -1,15 +1,20 @@
 package controllers;
 
+import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
+import cz.cvut.fel.si.schmipe4.persistence.model.Category;
+import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+
+import java.util.Date;
 
 public class Application extends Controller {
 
 
     public static Result index() {
 
-        /*
+
         Category main;// = new Category("main");
         Category submain;// = new Category("submain");
         Category subsubmain;// = new Category("subsubmain");
@@ -170,7 +175,7 @@ public class Application extends Controller {
         cart13.save();
         cart14.save();
         cart15.save();
-        */
+
 
         return ok(index.render("Your new application is ready."));
     }
