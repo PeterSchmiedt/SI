@@ -1,11 +1,14 @@
 package controllers;
 
 import cz.cvut.fel.si.schmipe4.persistence.dao.CartDAO;
+import cz.cvut.fel.si.schmipe4.persistence.dao.ItemDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
 import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
+import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.cartdetail;
+import views.html.index;
 
 import java.util.Date;
 
@@ -27,6 +30,15 @@ public class CartController extends Controller {
     }
 
     public static Result addToCart(int id) {
+        ItemDAO itemDAO = daof.getItemDaoImpl();
+
+
+        Item item = itemDAO.getItemById(id);
+
+        if (item == null) {
+            return (index.render(title, session().get("username"), itemDAO.getAll()));
+        }
+
 
         return ok();
     }
