@@ -7,24 +7,24 @@ import play.Logger;
 public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public void addCategory(Category category) {
-        Logger.debug("Adding Category " + category.getName());
+        Logger.debug("Adding Category " + category.getId());
         category.save();
     }
 
     @Override
     public void updateCategoty(Category category) {
-        Logger.debug("Updating  Category " + category.getName());
+        Logger.debug("Updating  Category " + category.getId());
         category.update();
     }
 
     @Override
-    public void deleteCatogeory(int id) {
+    public void deleteCatogeory(Integer id) {
         Logger.debug("Deleting  Category " + id);
         Category.finder.byId(id).delete();
     }
 
     @Override
-    public Category getCategoryById(int id) {
+    public Category getCategoryById(Integer id) {
         Logger.debug("Getting Category " + id);
         return Category.finder.byId(id);
     }

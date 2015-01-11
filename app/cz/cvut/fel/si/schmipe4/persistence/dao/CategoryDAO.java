@@ -8,8 +8,8 @@ public interface CategoryDAO {
 
     public void updateCategoty(Category category);
 
-    public void deleteCatogeory(int id);
+    public void deleteCatogeory(Integer id);
 
-    public Category getCategoryById(int id);
+    public Category getCategoryById(Integer id);
 
 }

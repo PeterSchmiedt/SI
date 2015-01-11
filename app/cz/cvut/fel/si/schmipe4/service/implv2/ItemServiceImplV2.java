@@ -22,6 +22,13 @@ public class ItemServiceImplV2 implements ItemService {
         itemDAO = daoFactory.getItemDaoImpl();
     }
 
+    /*
+    *
+    * 5. Kategorie se nesmí opakovat-------
+      6. Kategoriie nesmí být nadkategorií/podkategoríí již přiřazenou ke zboží - musi byt jednoducha struktura stromu
+            1. Boty - nesmí být běžecké boty a obráceně = jen jedna - kategorie se nesmi cyklit ...
+    * */
+
     @Override
     public boolean registerItemAndSelectCategory(Item item, Category category) {
         Item itemDB = itemDAO.getItemById(item.getId());

@@ -33,9 +33,7 @@ public class CartServiceImplV2 implements CartService {
     2. - nákup nesmí obsahovat více než 10 položek daného produktu ------
     3. Osoba smí nakupovat v jeden den jen 1x
     4. registrace zboží nesmí mít totožný název ---------
-    5. Kategorie se nesmí opakovat
-    6. Kategoriie nesmí být nadkategorií/podkategoríí již přiřazenou ke zboží - musi byt jednoducha struktura stromu
-            1. Boty - nesmí být běžecké boty a obráceně = jen jedna - kategorie se nesmi cyklit ...
+
     7. Loggujte do Loggeru
 
      */
