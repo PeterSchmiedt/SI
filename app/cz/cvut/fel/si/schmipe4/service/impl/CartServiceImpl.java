@@ -29,7 +29,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean shop(Cart cart, Item item, int quantity) {
+    public boolean shop(Cart cart) {
+        return false;
+    }
+
+    @Override
+    public boolean addToCart(Cart cart, Item item, int quantity) {
         Item i = itemDAO.getItemById(item.getId());
         if (i == null) return false;
 

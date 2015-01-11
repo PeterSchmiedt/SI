@@ -206,9 +206,9 @@ public class CartServiceTest extends WithApplication {
 
 
     @Test
-    public void shopTest() {
+    public void addToCartTest() {
         Cart c = new Cart("myCustomer", new Date());
-        cartService.shop(c, item1, 10);
+        cartService.addToCart(c, item1, 10);
         assertEquals(item1.getId(), Cart.finder.byId(c.getCustomer()).getItems().iterator().next().getItem().getId());
         assertEquals(10, Cart.finder.byId(c.getCustomer()).getItems().iterator().next().getQuantity());
     }

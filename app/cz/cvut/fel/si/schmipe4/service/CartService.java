@@ -8,7 +8,9 @@ import java.util.Date;
 
 public interface CartService {
 
-    public boolean shop(Cart cart, Item item, int quantity);
+    public boolean shop(Cart cart);
+
+    public boolean addToCart(Cart cart, Item item, int quantity);
 
     public double getTotal(Cart cart);
 
