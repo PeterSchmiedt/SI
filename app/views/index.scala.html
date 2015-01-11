@@ -12,39 +12,45 @@
                             <th>Description</th>
                             <th>Price</th>
                             <th>Category</th>
+                            <th>Quantity</th>
                             <th>Add To Cart</th>
                         </tr>
                     </thead>
                     <tbody>
                     @for(item <- itemSet.iterator) {
-                        <tr>
-                            <td>@item.getName</td>
-                            <td>@item.getDescription</td>
-                            <td>@item.getPrice</td>
-                            <td>
-                            @for(category <- item.getCategories.iterator()) {
-                                @category.getName
-                                @if(category.getParent != null) {
-                                    / @category.getParent.getName
-                                    @if(category.getParent.getParent != null) {
-                                        / @category.getParent.getParent.getName
-                                        @if(category.getParent.getParent.getParent != null) {
-                                            / @category.getParent.getParent.getParent.getName
-                                            @if(category.getParent.getParent.getParent.getParent != null) {
-                                                / @category.getParent.getParent.getParent.getParent.getName
-                                                @if(category.getParent.getParent.getParent.getParent.getParent != null) {
-                                                    / @category.getParent.getParent.getParent.getParent.getParent.getName
+                        <form action="@routes.CartController.addToCart(item.getId)" method="post">
 
+                            <tr>
+                                <td>@item.getName</td>
+                                <td>@item.getDescription</td>
+                                <td>@item.getPrice</td>
+                                <td>
+                                @for(category <- item.getCategories.iterator()) {
+                                    @category.getName
+                                    @if(category.getParent != null) {
+                                        / @category.getParent.getName
+                                        @if(category.getParent.getParent != null) {
+                                            / @category.getParent.getParent.getName
+                                            @if(category.getParent.getParent.getParent != null) {
+                                                / @category.getParent.getParent.getParent.getName
+                                                @if(category.getParent.getParent.getParent.getParent != null) {
+                                                    / @category.getParent.getParent.getParent.getParent.getName
+                                                    @if(category.getParent.getParent.getParent.getParent.getParent != null) {
+                                                        / @category.getParent.getParent.getParent.getParent.getParent.getName
+
+                                    }
+                                    }
+                                    }
+                                    }
+                                    }
+                                    <br/>
                                 }
-                                }
-                                }
-                                }
-                                }
-                                <br/>
-                            }
-                            </td>
-                            <td></td>
-                            }
+                                </td>
+                                <td><input type="number" id="quantity" name="quantity" placeholder="Quantity"></td>
+                                <td><button type="submit">Add</button></td>
+                            </tr>
+                        </form>
+                    }
                     </tbody>
                 </table>
             </div>
