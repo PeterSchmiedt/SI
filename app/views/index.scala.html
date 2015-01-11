@@ -1,7 +1,30 @@
-@(message: String)
+@(title: String, user: String)(itemSet: Set[_root_.cz.cvut.fel.si.schmipe4.persistence.model.Item])
 
-@main("Welcome to Play") {
+    @main(title, user) {
 
-    @play20.welcome(message, style = "Java")
+        @if(itemSet != null) {
+            <div class="panel panel-default">
+                <div class="panel-heading">Items</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Add To Cart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(item <- itemSet.iterator) {
+                        <tr>
+                            <td>@item.getName</td>
+                            <td>@item.getDescription</td>
+                            <td>@item.getPrice</td>
+                            <td></td>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        }
 
-}
+    }

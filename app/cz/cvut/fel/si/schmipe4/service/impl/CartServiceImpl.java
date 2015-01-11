@@ -45,7 +45,7 @@ public class CartServiceImpl implements CartService {
             cart.setItems(new HashSet<>());
             cart.setDate(new Date());
             cart.setTotal(0);
-            cart.setShop(false);
+            cart.setShop(true);
         }
 
 

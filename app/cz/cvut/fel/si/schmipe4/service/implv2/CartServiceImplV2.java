@@ -44,7 +44,7 @@ public class CartServiceImplV2 implements CartService {
     public boolean shop(Cart cart) {
         Cart c = cartDAO.getCartById(cart.getCustomer());
         if (c == null) return false;
-        cart.setShop(false);
+        cart.setShop(true);
         cartDAO.updateCart(cart);
         return true;
     }
@@ -54,6 +54,7 @@ public class CartServiceImplV2 implements CartService {
         if (quantity > 10) return false;
 
         if (cart.isShop()) {
+            Logger.debug("addToCart isShop = true - " + cart.getCustomer());
             DateTime cartDate = new DateTime(cart.getDate());
             DateTime current = new DateTime(new Date());
 

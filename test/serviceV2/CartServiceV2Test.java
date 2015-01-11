@@ -15,7 +15,7 @@ import play.test.WithApplication;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 
@@ -204,6 +204,12 @@ public class CartServiceV2Test extends WithApplication {
 
     }
 
+    @Test
+    public void shopTest() {
+        assertTrue(cartService.shop(cart1));
+
+        assertFalse(cartService.addToCart(cart1, item1, 5));
+    }
 
     @Test
     public void addToCartTest() {
@@ -211,6 +217,8 @@ public class CartServiceV2Test extends WithApplication {
         cartService.addToCart(c, item1, 10);
         assertEquals(item1.getId(), Cart.finder.byId(c.getCustomer()).getItems().iterator().next().getItem().getId());
         assertEquals(10, Cart.finder.byId(c.getCustomer()).getItems().iterator().next().getQuantity());
+
+        assertFalse(cartService.addToCart(c, item1, 1));
     }
 
     @Test

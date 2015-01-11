@@ -1,0 +1,14 @@
+@(title: String)(user: String)
+
+@main(title, user) {
+
+    <form action="@routes.Application.doLogin()" method="post">
+        <p>
+            <label for="name">Name: </label><input type="name" id="name" name="name" placeholder="Name">
+        </p>
+        <p>
+            <button type="submit">Sig In</button>
+        </p>
+    </form>
+
+}

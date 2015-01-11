@@ -1,24 +1,28 @@
 package controllers;
 
+import cz.cvut.fel.si.schmipe4.persistence.dao.ItemDAO;
+import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
 import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
 import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
-import cz.cvut.fel.si.schmipe4.service.CartService;
-import cz.cvut.fel.si.schmipe4.service.impl.CartServiceImpl;
 import play.Logger;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.login;
 
 import java.util.Date;
+import java.util.Set;
 
 public class Application extends Controller {
 
+    private final static String title = "Shopping Cart";
+    private static DAOFactory daof = new DAOFactory();
 
     public static Result index() {
 
-
-        Category main;// = new Category("main");
+        /*Category main;// = new Category("main");
         Category submain;// = new Category("submain");
         Category subsubmain;// = new Category("subsubmain");
 
@@ -48,6 +52,7 @@ public class Application extends Controller {
         Cart cart14;// = new Cart("customer14", new Date());
         Cart cart15;// = new Cart("customer15", new Date());
 
+
         main = new Category("main", null);
         submain = new Category("submain", main);
         subsubmain = new Category("subsubmain", submain);
@@ -58,7 +63,6 @@ public class Application extends Controller {
         main.save();
         submain.save();
         subsubmain.save();
-
 
         item1 = new Item("item1", "description", 100);
         item2 = new Item("item2", "description", 200);
@@ -93,21 +97,21 @@ public class Application extends Controller {
         item9.save();
 
 
-        cart1 = new Cart("customer1", new Date());
-        cart2 = new Cart("customer2", new Date());
-        cart3 = new Cart("customer3", new Date());
-        cart4 = new Cart("customer4", new Date());
-        cart5 = new Cart("customer5", new Date());
-        cart6 = new Cart("customer6", new Date());
-        cart7 = new Cart("customer7", new Date());
-        cart8 = new Cart("customer8", new Date());
-        cart9 = new Cart("customer9", new Date());
-        cart10 = new Cart("customer10", new Date());
-        cart11 = new Cart("customer11", new Date());
-        cart12 = new Cart("customer12", new Date());
-        cart13 = new Cart("customer13", new Date());
-        cart14 = new Cart("customer14", new Date());
-        cart15 = new Cart("customer15", new Date());
+        cart1 = new Cart("customer1", new Date(1420913410));
+        cart2 = new Cart("customer2", new Date(1420913410));
+        cart3 = new Cart("customer3", new Date(1420913410));
+        cart4 = new Cart("customer4", new Date(1420913410));
+        cart5 = new Cart("customer5", new Date(1420913410));
+        cart6 = new Cart("customer6", new Date(1420913410));
+        cart7 = new Cart("customer7", new Date(1420913410));
+        cart8 = new Cart("customer8", new Date(1420913410));
+        cart9 = new Cart("customer9", new Date(1420913410));
+        cart10 = new Cart("customer10", new Date(1420913410));
+        cart11 = new Cart("customer11", new Date(1420913410));
+        cart12 = new Cart("customer12", new Date(1420913410));
+        cart13 = new Cart("customer13", new Date(1420913410));
+        cart14 = new Cart("customer14", new Date(1420913410));
+        cart15 = new Cart("customer15", new Date(1420913410));
 
         cart1.addItem(item1, 5);
         cart1.addItem(item2, 10);
@@ -163,8 +167,6 @@ public class Application extends Controller {
         cart15.addItem(item7, 3);
         cart15.addItem(item8, 1);
 
-        //shopping za 70 000 presne :D
-
         cart1.save();
         cart2.save();
         cart3.save();
@@ -180,15 +182,62 @@ public class Application extends Controller {
         cart13.save();
         cart14.save();
         cart15.save();
+        */
 
 
-        CartService cs = new CartServiceImpl();
-        Logger.debug(cs.getTotalForDay(new Date()) + "");
-        Logger.debug(cs.getTotalForCategory(main) + "");
-        Logger.debug(cs.getTotalForCategory(submain) + "");
-        Logger.debug(cs.getTotalForCategory(subsubmain) + "");
+        ItemDAO itemDAO = daof.getItemDaoImpl();
 
-        return ok(index.render("Your new application is ready."));
+        Set<Item> itemSet = itemDAO.getAll();
+
+
+        if (session().containsKey("username")) {
+            return ok(index.render(title, session().get("username"), itemSet));
+        }
+        session("username", "Guest User");
+        Logger.debug("User: " + session().get("username"));
+
+        return ok(index.render(title, session().get("username"), itemSet));
     }
+
+    public static Result login() {
+
+        return ok(login.render(title, session("username")));
+    }
+
+    public static Result doLogin() {
+
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest(new String[0]);
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(title, session().get("username")));
+        }
+
+        session().clear();
+        session("username", loginForm.get().getName());
+
+        return redirect(routes.Application.index());
+    }
+
+    public static Result logout() {
+        session().clear();
+        flash("success", "You've been logged out");
+        return redirect(routes.Application.index());
+    }
+
+    public static class Login {
+        public String name;
+
+        public String validate() {
+            return null;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public void setName(String paramString) {
+            this.name = paramString;
+        }
+    }
+
 
 }
