@@ -18,6 +18,8 @@ public class Cart extends Model {
     private double total;
     private Date date;
 
+    private boolean shop;
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CartItem> items;
 
@@ -29,8 +31,8 @@ public class Cart extends Model {
         this.total = 0;
         this.date = date;
         this.items = new HashSet<>();
+        this.shop = false;
     }
-
 
     public String getCustomer() {
         return customer;
@@ -54,6 +56,14 @@ public class Cart extends Model {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isShop() {
+        return shop;
+    }
+
+    public void setShop(boolean shop) {
+        this.shop = shop;
     }
 
     public Set<CartItem> getItems() {

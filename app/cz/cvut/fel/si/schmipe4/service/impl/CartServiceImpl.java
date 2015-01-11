@@ -12,6 +12,7 @@ import cz.cvut.fel.si.schmipe4.service.CartService;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CartServiceImpl implements CartService {
@@ -30,11 +31,24 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean shop(Cart cart) {
-        return false;
+        Cart c = cartDAO.getCartById(cart.getCustomer());
+        if (c == null) return false;
+        cart.setShop(false);
+        cartDAO.updateCart(cart);
+        return true;
     }
 
     @Override
     public boolean addToCart(Cart cart, Item item, int quantity) {
+        if (cart.isShop()) {
+            cart.setItems(new HashSet<>());
+            cart.setShop(false);
+        }
+
+        //ak cart nie je hotovy nerob nic
+        //ak cart je uz zrobeny musis vytvorit novy cart .... stracas historiu ....
+
+
         Item i = itemDAO.getItemById(item.getId());
         if (i == null) return false;
 

@@ -7,6 +7,7 @@ create table cart (
   customer                  varchar(255) not null,
   total                     double,
   date                      timestamp,
+  shop                      boolean,
   constraint pk_cart primary key (customer))
 ;
 
