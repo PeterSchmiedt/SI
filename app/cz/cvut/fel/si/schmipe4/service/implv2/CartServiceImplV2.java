@@ -68,6 +68,7 @@ public class CartServiceImplV2 implements CartService {
             cart.setDate(new Date());
             cart.setTotal(0);
             cart.setShop(false);
+            cartDAO.updateCart(cart);
         }
 
 

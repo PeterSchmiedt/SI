@@ -12,6 +12,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.cartdetail;
+import views.html.checkout;
 import views.html.index;
 
 import java.util.Date;
@@ -54,6 +55,10 @@ public class CartController extends Controller {
 
         Cart cart = cartDAO.getCartById(session().get("username"));
 
+        if (cart == null) {
+            cart = new Cart(session().get("username"), new Date());
+        }
+
         if (cartService.addToCart(cart, item, form.get().getQuantity())) {
             //added
             return ok(cartdetail.render(title, session().get("username"), cart));
@@ -76,6 +81,10 @@ public class CartController extends Controller {
             return redirect(routes.CartController.getCartDetail());
         }
 
+        if (form.get().getQuantity() <= 0) {
+            return redirect(routes.CartController.getCartDetail());
+        }
+
         for (CartItem ci : cart.getItems()) {
             if (ci.getItem().getId() == id) {
                 ci.setQuantity(form.get().getQuantity());
@@ -86,6 +95,20 @@ public class CartController extends Controller {
         cartDAO.updateCart(cart);
 
         return redirect(routes.CartController.getCartDetail());
+
+    }
+
+    public static Result checkout() {
+        CartDAO cartDAO = daof.getCartDaoImpl();
+
+        Cart cart = cartDAO.getCartById(session().get("username"));
+
+        if (cart == null) {
+            return redirect(routes.CartController.getCartDetail());
+        }
+
+        return ok(checkout.render(title, session().get("username"), cartService.shop(cart)));
+
 
     }
 

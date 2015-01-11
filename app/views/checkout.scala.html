@@ -1,0 +1,13 @@
+@(title: String, user: String)(success: Boolean)
+
+@main(title, user) {
+
+    <center>
+    @if(success) {
+        <h1>Success</h1>
+    } else {
+        <h1>FAIL</h1>
+    }
+    </center>
+
+}

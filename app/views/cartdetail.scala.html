@@ -22,7 +22,7 @@
                         <td>@cartItem.getItem.getDescription</td>
                         @helper.form(action = routes.CartController.update(cartItem.getItem.getId)) {
                             <td>
-                                <input type="number" id="quantity" name="quantity" placeholder="@cartItem.getQuantity">
+                                <input type="number" id="quantity" name="quantity" value="@cartItem.getQuantity">
                             </td>
 
                             <td>@(cartItem.getItem.getPrice * cartItem.getQuantity)</td>
@@ -31,6 +31,14 @@
                     </tr>
                 }
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL</td>
+                        <td>@cart.getTotal</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     }

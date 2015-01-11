@@ -43,7 +43,12 @@ public class Cart extends Model {
     }
 
     public double getTotal() {
-        return total;
+        double ret = 0;
+        for (CartItem ci : getItems()) {
+            ret += ci.getItem().getPrice() * ci.getQuantity();
+        }
+//        return total;
+        return ret;
     }
 
     public void setTotal(double total) {
@@ -89,4 +94,6 @@ public class Cart extends Model {
         //update price
         total += item.getPrice() * quantity;
     }
+
+
 }
