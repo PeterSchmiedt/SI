@@ -1,4 +1,4 @@
-package cz.cvut.fel.si.schmipe4.service.impl;
+package cz.cvut.fel.si.schmipe4.service.implv2;
 
 import cz.cvut.fel.si.schmipe4.persistence.dao.CartDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.CategoryDAO;
@@ -14,14 +14,14 @@ import org.joda.time.DateTime;
 import java.util.Date;
 import java.util.Set;
 
-public class CartServiceImpl implements CartService {
+public class CartServiceImplV2 implements CartService {
 
     DAOFactory daoFactory;
     CartDAO cartDAO;
     CategoryDAO categoryDAO;
     ItemDAO itemDAO;
 
-    public CartServiceImpl() {
+    public CartServiceImplV2() {
         daoFactory = new DAOFactory();
         cartDAO = daoFactory.getCartDaoImpl();
         categoryDAO = daoFactory.getCategoryDAOImpl();
