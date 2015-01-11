@@ -28,18 +28,40 @@ public class CartServiceImplV2 implements CartService {
         itemDAO = daoFactory.getItemDaoImpl();
     }
 
+    /*
+
+    2. - nákup nesmí obsahovat více než 10 položek daného produktu ------
+    3. Osoba smí nakupovat v jeden den jen 1x
+    4. registrace zboží nesmí mít totožný název ---------
+    5. Kategorie se nesmí opakovat
+    6. Kategoriie nesmí být nadkategorií/podkategoríí již přiřazenou ke zboží - musi byt jednoducha struktura stromu
+            1. Boty - nesmí být běžecké boty a obráceně = jen jedna - kategorie se nesmi cyklit ...
+    7. Loggujte do Loggeru
+
+     */
+
     @Override
     public boolean shop(Cart cart, Item item, int quantity) {
+        if (quantity > 10) return false;
+
         Item i = itemDAO.getItemById(item.getId());
         if (i == null) return false;
 
         Cart c = cartDAO.getCartById(cart.getCustomer());
 
-        cart.addItem(i, quantity);
 
         if (c == null) {
+            cart.addItem(i, quantity);
             cartDAO.addCart(cart);
         } else {
+            for (CartItem ci : c.getItems()) {
+                if (ci.getItem().getId() == i.getId()) {
+                    //v kosiku uz jeden taky item je
+                    if (ci.getQuantity() + quantity > 10) return false;
+                }
+            }
+
+            cart.addItem(i, quantity);
             cartDAO.updateCart(cart);
         }
         return true;
