@@ -10,6 +10,7 @@ import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import cz.cvut.fel.si.schmipe4.service.CartService;
 import org.joda.time.DateTime;
+import play.Logger;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +33,7 @@ public class CartServiceImplV2 implements CartService {
     /*
 
     2. - nákup nesmí obsahovat více než 10 položek daného produktu ------
-    3. Osoba smí nakupovat v jeden den jen 1x
+    3. Osoba smí nakupovat v jeden den jen 1x -----------
     4. registrace zboží nesmí mít totožný název ---------
 
     7. Loggujte do Loggeru
@@ -53,18 +54,27 @@ public class CartServiceImplV2 implements CartService {
         if (quantity > 10) return false;
 
         if (cart.isShop()) {
+            DateTime cartDate = new DateTime(cart.getDate());
+            DateTime current = new DateTime(new Date());
+
+            //check if the
+            if (cartDate.getDayOfYear() == current.getDayOfYear()) {
+                Logger.debug("addToCart - the customer made a purchase today.");
+                return false;
+            }
 
             cart.setItems(new HashSet<>());
+            cart.setDate(new Date());
             cart.setTotal(0);
             cart.setShop(false);
         }
 
-        //ak cart nie je hotovy nerob nic
-        //ak cart je uz zrobeny musis vytvorit novy cart .... stracas historiu ....
-
 
         Item i = itemDAO.getItemById(item.getId());
-        if (i == null) return false;
+        if (i == null) {
+            Logger.debug("addToCart - Item does not exist.");
+            return false;
+        }
 
         Cart c = cartDAO.getCartById(cart.getCustomer());
 
@@ -76,7 +86,10 @@ public class CartServiceImplV2 implements CartService {
             for (CartItem ci : c.getItems()) {
                 if (ci.getItem().getId() == i.getId()) {
                     //v kosiku uz jeden taky item je
-                    if (ci.getQuantity() + quantity > 10) return false;
+                    if (ci.getQuantity() + quantity > 10) {
+                        Logger.debug("addToCart - Quantity is too much for this item " + i.getName() + " in this cart " + cart.getCustomer());
+                        return false;
+                    }
                 }
             }
 
@@ -111,8 +124,6 @@ public class CartServiceImplV2 implements CartService {
     @Override
     public double getTotalForDay(Date date) {
         Set<Cart> carts = cartDAO.getAll();
-        //TODO tu by sa hodilo cartDAO.getForToday(Date date)...
-
         double total = 0;
 
         DateTime dateTime = new DateTime(date);

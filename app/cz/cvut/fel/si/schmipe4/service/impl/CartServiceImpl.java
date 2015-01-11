@@ -10,6 +10,7 @@ import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import cz.cvut.fel.si.schmipe4.service.CartService;
 import org.joda.time.DateTime;
+import play.Logger;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -42,15 +43,17 @@ public class CartServiceImpl implements CartService {
     public boolean addToCart(Cart cart, Item item, int quantity) {
         if (cart.isShop()) {
             cart.setItems(new HashSet<>());
+            cart.setDate(new Date());
+            cart.setTotal(0);
             cart.setShop(false);
         }
 
-        //ak cart nie je hotovy nerob nic
-        //ak cart je uz zrobeny musis vytvorit novy cart .... stracas historiu ....
-
 
         Item i = itemDAO.getItemById(item.getId());
-        if (i == null) return false;
+        if (i == null) {
+            Logger.debug("addToCart - item does not exist");
+            return false;
+        }
 
         Cart c = cartDAO.getCartById(cart.getCustomer());
 
@@ -89,8 +92,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public double getTotalForDay(Date date) {
         Set<Cart> carts = cartDAO.getAll();
-        //TODO tu by sa hodilo cartDAO.getForToday(Date date)...
-
         double total = 0;
 
         DateTime dateTime = new DateTime(date);
