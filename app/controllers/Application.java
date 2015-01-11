@@ -2,8 +2,6 @@ package controllers;
 
 import cz.cvut.fel.si.schmipe4.persistence.dao.ItemDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
-import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
-import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import play.Logger;
 import play.data.Form;
@@ -12,7 +10,6 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.login;
 
-import java.util.Date;
 import java.util.Set;
 
 public class Application extends Controller {
@@ -21,6 +18,8 @@ public class Application extends Controller {
     private static DAOFactory daof = new DAOFactory();
 
     public static Result index() {
+
+
 
         /*Category main;// = new Category("main");
         Category submain;// = new Category("submain");

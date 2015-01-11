@@ -11,6 +11,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Price</th>
+                            <th>Category</th>
                             <th>Add To Cart</th>
                         </tr>
                     </thead>
@@ -20,6 +21,28 @@
                             <td>@item.getName</td>
                             <td>@item.getDescription</td>
                             <td>@item.getPrice</td>
+                            <td>
+                            @for(category <- item.getCategories.iterator()) {
+                                @category.getName
+                                @if(category.getParent != null) {
+                                    / @category.getParent.getName
+                                    @if(category.getParent.getParent != null) {
+                                        / @category.getParent.getParent.getName
+                                        @if(category.getParent.getParent.getParent != null) {
+                                            / @category.getParent.getParent.getParent.getName
+                                            @if(category.getParent.getParent.getParent.getParent != null) {
+                                                / @category.getParent.getParent.getParent.getParent.getName
+                                                @if(category.getParent.getParent.getParent.getParent.getParent != null) {
+                                                    / @category.getParent.getParent.getParent.getParent.getParent.getName
+
+                                }
+                                }
+                                }
+                                }
+                                }
+                                <br/>
+                            }
+                            </td>
                             <td></td>
                             }
                     </tbody>

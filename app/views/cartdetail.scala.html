@@ -1,7 +1,32 @@
-@(title: String, user: String)
+@(title: String, user: String)(cart: _root_.cz.cvut.fel.si.schmipe4.persistence.model.Cart)
 
 @main(title, user) {
 
-    <h1>HELLO</h1>
+    @if(cart != null) {
+        <div class="panel panel-default">
+            <div class="panel-heading">Items</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Sum Price</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(cartItem <- cart.getItems) {
+                    <tr>
+                        <td>@cartItem.getItem.getName</td>
+                        <td>@cartItem.getItem.getDescription</td>
+                        <td>@cartItem.getQuantity</td>
+                        <td>@(cartItem.getItem.getPrice * cartItem.getQuantity)</td>
+                        <td>BUTTON</td>
+                        }
+                </tbody>
+            </table>
+        </div>
+    }
 
 }
