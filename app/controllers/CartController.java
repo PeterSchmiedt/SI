@@ -4,6 +4,7 @@ import cz.cvut.fel.si.schmipe4.persistence.dao.CartDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.ItemDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
 import cz.cvut.fel.si.schmipe4.persistence.model.Cart;
+import cz.cvut.fel.si.schmipe4.persistence.model.CartItem;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import cz.cvut.fel.si.schmipe4.service.CartService;
 import cz.cvut.fel.si.schmipe4.service.implv2.CartServiceImplV2;
@@ -59,6 +60,33 @@ public class CartController extends Controller {
         }
 
         return redirect(routes.Application.index());
+    }
+
+    public static Result update(int id) {
+        Form<AddToCart> form = Form.form(AddToCart.class).bindFromRequest(new String[0]);
+        if (form.hasErrors()) {
+            return redirect(routes.CartController.getCartDetail());
+        }
+
+        CartDAO cartDAO = daof.getCartDaoImpl();
+
+        Cart cart = cartDAO.getCartById(session().get("username"));
+
+        if (cart == null) {
+            return redirect(routes.CartController.getCartDetail());
+        }
+
+        for (CartItem ci : cart.getItems()) {
+            if (ci.getItem().getId() == id) {
+                ci.setQuantity(form.get().getQuantity());
+            }
+
+        }
+
+        cartDAO.updateCart(cart);
+
+        return redirect(routes.CartController.getCartDetail());
+
     }
 
     public static class AddToCart {
