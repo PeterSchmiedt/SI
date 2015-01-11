@@ -8,8 +8,6 @@ import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import cz.cvut.fel.si.schmipe4.service.ItemService;
 
-import java.util.Set;
-
 public class ItemServiceImplV2 implements ItemService {
 
     DAOFactory daoFactory;
@@ -67,12 +65,13 @@ public class ItemServiceImplV2 implements ItemService {
     private boolean checkInvariant(Category category) {
         Category parent = category.getParent();
         if (parent == null) return true;
-        Set<Category> subcategories = category.getSubcategories();
-        if (subcategories == null) return true;
 
-        for (Category c : subcategories) {
-            if (parent.getId() == c.getId()) return false;
-        }
+        Category parentparent = parent.getParent();
+
+        if (category.getId() == parent.getId()) return false;
+        if (category.getId() == parentparent.getId()) return false;
+
+
         return true;
     }
 }
