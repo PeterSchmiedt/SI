@@ -16,7 +16,7 @@ public class CartItem extends Model {
 
     private int quantity;
 
-    public static Finder<Integer, CartItem> finder = new Model.Finder<Integer, CartItem>(Integer.class, CartItem.class);
+    public static final Finder<Integer, CartItem> finder = new Model.Finder<Integer, CartItem>(Integer.class, CartItem.class);
 
 
     public CartItem(Item item, int quantity) {

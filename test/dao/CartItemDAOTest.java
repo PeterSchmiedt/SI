@@ -2,13 +2,10 @@ package dao;
 
 import cz.cvut.fel.si.schmipe4.persistence.dao.CartItemDAO;
 import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
-import cz.cvut.fel.si.schmipe4.persistence.model.CartItem;
-import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import org.junit.Before;
 import org.junit.Test;
 import play.test.WithApplication;
 
-import static org.junit.Assert.assertEquals;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 

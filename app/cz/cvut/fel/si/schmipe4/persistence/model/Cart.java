@@ -23,7 +23,7 @@ public class Cart extends Model {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CartItem> items;
 
-    public static Finder<String, Cart> finder = new Model.Finder<String, Cart>(String.class, Cart.class);
+    public static final Finder<String, Cart> finder = new Model.Finder<String, Cart>(String.class, Cart.class);
 
 
     public Cart(String customer, Date date) {

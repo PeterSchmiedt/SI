@@ -19,7 +19,7 @@ public class Item extends Model {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Category> categories;
 
-    public static Finder<Integer, Item> finder = new Model.Finder<Integer, Item>(Integer.class, Item.class);
+    public static final Finder<Integer, Item> finder = new Model.Finder<Integer, Item>(Integer.class, Item.class);
 
 
     public Item(String name, String description, double price) {

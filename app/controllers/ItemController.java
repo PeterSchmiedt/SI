@@ -18,8 +18,8 @@ import java.util.Set;
 public class ItemController extends Controller {
 
     private final static String title = "Shopping Cart";
-    private static DAOFactory daof = new DAOFactory();
-    private static ItemService itemService = new ItemServiceImplV2();
+    private static final DAOFactory daof = new DAOFactory();
+    private static final ItemService itemService = new ItemServiceImplV2();
 
     public static Result addCategoryToItem() {
         CategoryDAO categoryDAO = daof.getCategoryDAOImpl();

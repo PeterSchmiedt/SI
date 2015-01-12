@@ -20,8 +20,8 @@ import java.util.Date;
 public class CartController extends Controller {
 
     private final static String title = "Shopping Cart";
-    private static DAOFactory daof = new DAOFactory();
-    private static CartService cartService = new CartServiceImplV2();
+    private static final DAOFactory daof = new DAOFactory();
+    private static final CartService cartService = new CartServiceImplV2();
 
 
     public static Result getCartDetail() {

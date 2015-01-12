@@ -21,7 +21,7 @@ public class Category extends Model {
     private Category parent;
 
 
-    public static Finder<Integer, Category> finder = new Model.Finder<Integer, Category>(Integer.class, Category.class);
+    public static final Finder<Integer, Category> finder = new Model.Finder<Integer, Category>(Integer.class, Category.class);
 
 
     public Category(String name, Category parent) {
