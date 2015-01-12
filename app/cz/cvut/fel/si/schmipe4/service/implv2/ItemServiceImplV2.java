@@ -7,6 +7,7 @@ import cz.cvut.fel.si.schmipe4.persistence.dao.impl.DAOFactory;
 import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import cz.cvut.fel.si.schmipe4.persistence.model.Item;
 import cz.cvut.fel.si.schmipe4.service.ItemService;
+import play.Logger;
 
 public class ItemServiceImplV2 implements ItemService {
 
@@ -33,9 +34,11 @@ public class ItemServiceImplV2 implements ItemService {
     public boolean registerItemAndSelectCategory(Item item, Category category) {
         Item itemDB = itemDAO.getItemById(item.getId());
         Category categoryDB = categoryDAO.getCategoryById(category.getId());
+
         if (!checkInvariant(category)) {
             return false;
         }
+
         if (itemDB == null) {
             item.getCategories().add(category);
 
@@ -54,8 +57,12 @@ public class ItemServiceImplV2 implements ItemService {
             if (categoryDB == null) {
                 categoryDAO.addCategory(category);
                 itemDAO.updateItem(item);
+                Logger.debug("register - success");
                 return true;
             } else {
+                if (!checkInvariant(categoryDB, itemDB)) {
+                    return false;
+                }
                 itemDAO.updateItem(item);
                 return true;
             }
@@ -67,11 +74,24 @@ public class ItemServiceImplV2 implements ItemService {
         if (parent == null) return true;
 
         Category parentparent = parent.getParent();
+        if (parentparent == null) return true;
 
         if (category.getId() == parent.getId()) return false;
         if (category.getId() == parentparent.getId()) return false;
 
 
+        return true;
+    }
+
+    private boolean checkInvariant(Category category, Item item) {
+        for (Category c : item.getCategories()) {
+            if (c.getParent() != null && c.getParent().getId() == category.getId()) {
+                return false;
+            }
+            if (category.getParent() != null && category.getParent().getId() == c.getId()) {
+                return false;
+            }
+        }
         return true;
     }
 }

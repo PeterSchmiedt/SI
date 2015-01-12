@@ -2,6 +2,32 @@
 
 @main(title, user) {
 
-    @form
+    <center>
+
+        <form action="@routes.ItemController.doAddCategoryToItem()" method="post">
+
+            <p>
+                <select name="itemId" id="itemId">
+                @for(item <- itemSet) {
+                    <option value="@item.getId">@item.getName</option>
+                }
+                </select>
+            </p>
+
+            <p>
+                <select name="categoryId" id="categoryId">
+                @for(category <- categorySet) {
+                    <option value="@category.getId">@category.getName</option>
+                }
+                </select>
+            </p>
+
+            <p>
+                <button type="submit">OK</button>
+            </p>
+
+        </form>
+
+    </center>
 
 }

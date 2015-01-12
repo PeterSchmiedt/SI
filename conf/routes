@@ -16,6 +16,9 @@ POST        /update/:id           controllers.CartController.update(id: Integer)
 
 GET         /checkout             controllers.CartController.checkout()
 
+GET         /itemcategory         controllers.ItemController.addCategoryToItem()
+POST        /itemcategory         controllers.ItemController.doAddCategoryToItem()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file         controllers.Assets.at(path="/public", file)
 
