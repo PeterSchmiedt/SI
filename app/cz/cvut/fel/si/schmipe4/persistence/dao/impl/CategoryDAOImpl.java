@@ -4,6 +4,8 @@ import cz.cvut.fel.si.schmipe4.persistence.dao.CategoryDAO;
 import cz.cvut.fel.si.schmipe4.persistence.model.Category;
 import play.Logger;
 
+import java.util.Set;
+
 public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public void addCategory(Category category) {
@@ -27,5 +29,10 @@ public class CategoryDAOImpl implements CategoryDAO {
     public Category getCategoryById(Integer id) {
         Logger.debug("Getting Category " + id);
         return Category.finder.byId(id);
+    }
+
+    @Override
+    public Set<Category> getAll() {
+        return Category.finder.findSet();
     }
 }
